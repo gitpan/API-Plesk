@@ -1,0 +1,19 @@
+--- #YAML:1.0
+name:                API-Plesk
+version:             1.00
+abstract:            API::Plesk - OOP interface to the Plesk XML API
+license:             perl
+author:              
+    - NRG <pavel.odintsov@googlemail.com>
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
+    Carp:                          0
+    Data::Dumper:                  0
+    Getopt::Long:                  0
+    HTTP::Request:                 0
+    LWP::UserAgent:                0
+    Test::More:                    0
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3
