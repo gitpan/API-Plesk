@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                API-Plesk
-version:             1.00
+version:             1.01
 abstract:            API::Plesk - OOP interface to the Plesk XML API
 license:             perl
 author:              

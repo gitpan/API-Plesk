@@ -25,7 +25,7 @@ API:: Plesk:: Complex includes functions to perform complex operations, such as 
 =head1 SYNOPSIS
 
   use API::Plesk::Complex;
-  
+
   my $result = API::Plesk::Complex::change_tariff(
     $plesk_client,                # Plesk.pm object.
     from => 'source_tariff_name', # source tariff
@@ -40,7 +40,7 @@ API:: Plesk:: Complex includes functions to perform complex operations, such as 
 There are currently enforced only change tariff plan on the basis of permits and limitations specified in the Template
 with the names in "to" and "from" fields.
 
-	
+
 We have Plesk feature - a shift from "high" (ie, with a large disk space, large number subdomains etc.)
 to a "low" is not allowed and will get an error. So tentatively better check tariffs on "the possibility of transferring" first in Plesk administrative panel, and then use the automatic shift.
 

@@ -15,18 +15,18 @@ use warnings;
 use API::Plesk::Methods;
 use Data::Dumper;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 =head1 NAME
 
 API::Plesk::Templates - extension module for obtaining information about the limitations of the template account.
 
 =head1 SYNOPSIS
-	
+
 Directly not used, calls via API::Plesk.
- 
+
  use API::Plesk;
- 
+
  my $plesk_client = API::Plesk->new(%params);
  # See documentations for API::Plesk
 
@@ -60,6 +60,8 @@ There are three result hash refs in this hash: limits, permissions and ip-pool. 
   $res->get_data->[0]->{limits};
 
 For more details, see the documentation for the Plesk.
+
+=back
 
 =cut
 

@@ -11,7 +11,7 @@ package API::Plesk::Response;
 use strict;
 use warnings;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 
 =head1 NAME
@@ -132,6 +132,8 @@ sub get_error_codes {
 
 Return joined by ', ' error codes.
 
+=back
+
 =cut
 
 # Get error codes as string
@@ -151,16 +153,16 @@ __END__
   use API::Plesk::Response;
 
   # API::Plesk::Response->new ('server answer', @errors_list)
-  
+
   # Good answers
- 
+
   my $res1 = API::Plesk::Response->new('server answer', '');
   print 'All ok' if $res1->is_success;
   # print "All ok"
-  
+
   print $res1->get_data;
   # print "server answer"
-  
+
   print $res1->get_error_string;
   # Print '', # because no errors
 
@@ -170,15 +172,15 @@ __END__
   my $res2 = API::Plesk::Response->new('', 'error1');
   print 'Operation failed' unless $res2->is_success; 
   # print "Operation Failed"
-  
+
   print $res2->get_data;
   # print ''
-  
+
   print $res2->get_error_string;
   # Print '', # print "error1"
 
   # Multiple errors
-  
+
   my $res3 = API::Plesk::Response->new('', 'error1', 'error2', 'error3');
   print $res3->get_error_string; # print "error1, error2, error3"
 

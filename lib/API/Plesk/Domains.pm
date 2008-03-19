@@ -14,7 +14,7 @@ use warnings;
 use API::Plesk::Methods;
 use Data::Dumper;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 =head1 NAME
 
@@ -23,9 +23,9 @@ API::Plesk::Templates -	extension module to support operations with domains (onl
 =head1 SYNOPSIS
 
  Directly not used, calls via API::Plesk.
- 
+
  use API::Plesk;
- 
+
  my $plesk_client = API::Plesk->new(%params);
  # See documentations for API::Plesk
 
@@ -38,9 +38,8 @@ API::Plesk::Templates -	extension module to support operations with domains (onl
     template     => 'tariff1',
  );
 
-
 =head1 DESCRIPTION
-	
+
 The method used to add domain hosting account to a certain Plesk account.
 
 =over 3
@@ -56,6 +55,8 @@ Params:
  template - domain template name in Plesk.
 
 Return: response object with created domain id in data filed.
+
+=back
 
 =head1 EXPORT
 

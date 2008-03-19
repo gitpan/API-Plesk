@@ -1,4 +1,7 @@
 Revision history for Perl extension API::Plesk.
 
 1.00 Mar 18 08:57:17 SAMT 2008
-	- The first public release.
+    - The first public release.
+1.01 Mar 20 00:10:43 SAMT 2008
+    - Fix errors in pod documentation.
+    

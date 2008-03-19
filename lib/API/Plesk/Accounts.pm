@@ -14,7 +14,7 @@ use warnings;
 use API::Plesk::Methods;
 use Data::Dumper;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 =head1 NAME
 
@@ -25,7 +25,7 @@ API::Plesk::Accounts - extension module for the management of user accounts.
 Directly not used, calls via API::Plesk.
 
  use API::Plesk;
- 
+
  my $plesk_client = API::Plesk->new(%params);
  # See documentations for API::Plesk
 
@@ -77,7 +77,7 @@ my %template_data = (
 =over 3
 
 =item create(%params)
- 	
+
 Creates a user account on the basis of the template.
 
 Params:
@@ -274,6 +274,8 @@ all   => 1      - for all accounts.
 login => 'name' - for account with a given login.
 id    => 123    - for account with a given id 
 
+=back
+
 =cut
 
 
@@ -362,14 +364,7 @@ sub client_add_gen_info_check {
 __END__
 =head1 SEE ALSO
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
-
-If you have a mailing list set up for your module, mention it here.
-
-If you have a web site set up for your module, mention it here.
+Blank.
 
 =head1 AUTHOR
 

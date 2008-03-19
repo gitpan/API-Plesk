@@ -14,7 +14,7 @@ use warnings;
 use Carp;
 use Data::Dumper;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 =head1 NAME
 
@@ -59,6 +59,7 @@ Construct xml query:
  @addition_blocks -- other xml blocks
 
 =cut 
+
 # Create xml query
 # STATIC (operation*, type*, addition_blocks)
 # $type -- client-template, client
@@ -66,7 +67,7 @@ Construct xml query:
 # @addition_blocks -- other xml blocks
 sub construct_request_xml {
     my ($type, $operation, @addition_blocks) = @_;
-    
+
     return '' unless $operation && $type; 
     
     return create_node($type, create_node($operation, (join '', @addition_blocks) || undef ));
@@ -183,6 +184,8 @@ sub xml_extract_values {
 
 Provides parsing $xml_from_server previously extracting content block <$operation_type>.
 Also performed to check if the keys, a list of which appears in arrref $required_data
+
+=back
 
 =cut 
 

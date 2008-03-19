@@ -20,7 +20,7 @@ use LWP::UserAgent;
 
 use API::Plesk::Response;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 =head1 NAME
 
@@ -103,6 +103,8 @@ Example:
   # Func_Module -- module in API/Plesk folder
   # operation_type -- sub which defined in Func_Module.
   # params hash used as @_ for operation_type sub.
+
+=back
 
 =cut
 
