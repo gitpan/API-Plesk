@@ -14,7 +14,7 @@ use warnings;
 use API::Plesk::Methods;
 use Data::Dumper;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 =head1 NAME
 
@@ -155,9 +155,9 @@ limits, permissions, new_data -- hashref`s with corresponding blocks.
 
 And also one of the following options:
 
-all   => 1      - for all accounts.
-login => 'name' - for a given login.
-id    => 123    - for a given id 
+  all   => 1      - for all accounts.
+  login => 'name' - for a given login.
+  id    => 123    - for a given id 
 
 =cut
 
@@ -223,9 +223,9 @@ limits, permissions, new_data -- hashref`s with corresponding blocks.
 
 And also one of the following options:
 
-all   => 1      - all accounts.
-login => 'name' - account with a given login.
-id    => 123    - account with a given id 
+  all   => 1      - all accounts.
+  login => 'name' - account with a given login.
+  id    => 123    - account with a given id 
 
 =cut
 
@@ -270,9 +270,9 @@ Params:
 
 One of the following options:
 
-all   => 1      - for all accounts.
-login => 'name' - for account with a given login.
-id    => 123    - for account with a given id 
+  all   => 1      - for all accounts.
+  login => 'name' - for account with a given login.
+  id    => 123    - for account with a given id 
 
 =back
 

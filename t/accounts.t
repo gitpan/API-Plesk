@@ -63,11 +63,13 @@ is_deeply(
         'template-name'   => 'tarif'
     ),
 
-    "<client><add><gen_info><passwd>$test_user_data->{passwd}</passwd>" .
-    "<email>$test_user_data->{email}</email>".
+    "<client><add><gen_info>" . 
     "<country>$test_user_data->{country}</country>" .
-    "<pname>pavel</pname><phone>$test_user_data->{phone}</phone>" . 
-    "<login>$test_user_data->{login}</login></gen_info>"  .
+    "<email>$test_user_data->{email}</email>".
+    "<login>$test_user_data->{login}</login>" .
+    "<passwd>$test_user_data->{passwd}</passwd>" .
+    "<phone>$test_user_data->{phone}</phone>" . 
+    "<pname>pavel</pname></gen_info>"  .
     "<template-name>tarif</template-name></add></client>",
 
     'create account without params' 

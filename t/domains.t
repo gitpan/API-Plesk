@@ -26,13 +26,11 @@ is_deeply(
         template     => 'tariff1',
     ),
 
-    '<domain><add><gen_setup><status>0</status><htype>' . 
-    'vrt_hst</htype><client_id>12345</client_id><name>' .
-    "yandex.ru</name><ip_address>192.168.1.99</ip_address>" .
-    '</gen_setup><hosting><vrt_hst><ftp_login>asdasdad</ftp_login>' . 
-    "<ftp_password>qwertsdasy</ftp_password><ip_address>192.168.1.99" . 
-    "</ip_address></vrt_hst></hosting><template-name>tariff1" .
-    '</template-name></add></domain>',
+    '<domain><add><gen_setup><client_id>12345</client_id><htype>vrt_hst</htype>' . 
+    '<ip_address>192.168.1.99</ip_address><name>yandex.ru</name><status>0</status>' .
+    '</gen_setup><hosting><vrt_hst><ftp_login>asdasdad</ftp_login>' .
+    '<ftp_password>qwertsdasy</ftp_password><ip_address>192.168.1.99</ip_address>' .
+    '</vrt_hst></hosting><template-name>tariff1</template-name></add></domain>',
 
     'API::Plesk::Domains::create test'
 );

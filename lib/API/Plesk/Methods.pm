@@ -14,7 +14,7 @@ use warnings;
 use Carp;
 use Data::Dumper;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 =head1 NAME
 
@@ -105,7 +105,7 @@ sub generate_info_block {
     return create_node($user_info_block_type) if scalar keys %user_info < 1;
 
     my $block = "<${user_info_block_type}>";    
-    $block .= create_node($_, $user_info{$_}) for keys %user_info;
+    $block .= create_node($_, $user_info{$_}) for sort keys %user_info;
     $block .= "</${user_info_block_type}>";
 
     return $block;

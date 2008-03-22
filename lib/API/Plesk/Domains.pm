@@ -14,11 +14,11 @@ use warnings;
 use API::Plesk::Methods;
 use Data::Dumper;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 =head1 NAME
 
-API::Plesk::Templates -	extension module to support operations with domains (only create).
+API::Plesk::Domains - extension module to support operations with domains (only create).
 
 =head1 SYNOPSIS
 
@@ -41,6 +41,8 @@ API::Plesk::Templates -	extension module to support operations with domains (onl
 =head1 DESCRIPTION
 
 The method used to add domain hosting account to a certain Plesk account.
+
+=head1 METHODS
 
 =over 3
 

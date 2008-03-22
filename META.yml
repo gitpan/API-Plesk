@@ -1,11 +1,11 @@
 --- #YAML:1.0
 name:                API-Plesk
-version:             1.01
+version:             1.02
 abstract:            API::Plesk - OOP interface to the Plesk XML API
 license:             perl
 author:              
     - NRG <pavel.odintsov@googlemail.com>
-generated_by:        ExtUtils::MakeMaker version 6.42
+generated_by:        ExtUtils::MakeMaker version 6.44
 distribution_type:   module
 requires:     
     Carp:                          0

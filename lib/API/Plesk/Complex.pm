@@ -20,7 +20,7 @@ our $VERSION = '1.00';
 
 =head1 NAME
 
-API:: Plesk:: Complex includes functions to perform complex operations, such as changing the tariff plan.
+API::Plesk::Complex includes functions to perform complex operations, such as changing the tariff plan.
 
 =head1 SYNOPSIS
 
