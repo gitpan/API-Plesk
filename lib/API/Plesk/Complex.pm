@@ -16,7 +16,7 @@ use lib qw(../../..);
 use API::Plesk;
 use API::Plesk::Response;
 
-our $VERSION = '1.00';
+our $VERSION = '1.03';
 
 =head1 NAME
 
@@ -85,7 +85,7 @@ sub change_tariff {
     return API::Plesk::Response->new('', 'Get source template data failed')
         unless $source_template_get_query->is_success;
 
-    $data{source_limits} = $source_template_get_query->get_data->[0]->{limits};
+    $data{source_limits}      = $source_template_get_query->get_data->[0]->{limits};
     $data{source_permissions} = $source_template_get_query->get_data->[0]->{permissions};
 
     # Compare limits blocks

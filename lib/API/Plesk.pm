@@ -20,7 +20,7 @@ use LWP::UserAgent;
 
 use API::Plesk::Response;
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 =head1 NAME
 
@@ -84,8 +84,8 @@ sub new {
         username      => $params {username},
         password      => $params {password},
         url           => $params {url},
-        debug         => $params {debug},     
-        package_name  => __PACKAGE__, # for parse $AUTLOAD
+        debug         => $params {debug},
+        package_name  => __PACKAGE__, # for parse $AUTLOAD.
         fake_response => '',
         request_debug => 0,           # only for debug XML requests
     };
@@ -153,11 +153,14 @@ sub _execute_query {
         </packet>
     DOC
 
-    return xml_http_req( $self->{'url'}, $xml_packet_struct, 
-                         headers => {
-                                     ':HTTP_AUTH_LOGIN'  => $self->{'username'},
-                                     ':HTTP_AUTH_PASSWD' => $self->{'password'},
-                                    }
+    return xml_http_req(
+        $self->{'url'},
+        $xml_packet_struct,
+
+        headers => {
+            ':HTTP_AUTH_LOGIN'  => $self->{'username'},
+            ':HTTP_AUTH_PASSWD' => $self->{'password'},
+        }
     );
 }
 
@@ -257,12 +260,13 @@ sub AUTOLOAD {
 
             foreach my $operation ('create', 'modify', 'delete', 'get') {
                 *{"${required_package_name}::$operation"} = sub {
-                    my $not_used_variable;
-                    $not_used_variable = shift
-                        if ref $_[0] eq $required_package_name;
+                    (undef) = shift if ref $_[0] eq $required_package_name;
 
-                    return $self->process_autoload_sub($required_package_name,
-                        $operation, \@_);
+                    return $self->process_autoload_sub(
+                        $required_package_name,
+                        $operation,
+                        \@_
+                    );
                 };
             }
 

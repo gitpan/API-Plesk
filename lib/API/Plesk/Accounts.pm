@@ -14,7 +14,7 @@ use warnings;
 use API::Plesk::Methods;
 use Data::Dumper;
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 =head1 NAME
 
@@ -264,7 +264,7 @@ sub delete_response_parse {
 
 =item get(%params)
 
-Get account detailf from Plesk.
+Get account details from Plesk.
 
 Params:
 
@@ -283,7 +283,7 @@ One of the following options:
 # STATIC( %args )
 # login => 'userlogin', id => 12312, all => 1
 sub get {
-    my %params = @_;
+    my %params = (permissions => 0, limits => 0, @_);
 
     my $filter = '';
 
@@ -297,8 +297,14 @@ sub get {
         $filter = '';
     }
     
+    my $addition_blocks = ($params{permissions} ? create_node('permissions') : '') .
+        ($params{limits} ? create_node('limits') : '');
+
+    # don`t use limits, preferences sequence!!!!
+    # only preferences, limits! Probably Plesk bug.
     return construct_request_xml('client', 'get', $filter, 
-        create_node ('dataset', create_node('gen_info')));
+        create_node ('dataset', create_node('gen_info') . $addition_blocks)
+    );
 }
 
 
@@ -314,6 +320,20 @@ sub get_response_parse {
         
     if (ref $parse_result eq 'HASH') {
         if ($parse_result->{'data'}) {
+            
+            my $limits = ($parse_result->{'data'} =~ m#<limits>(.*?)</limits>#sio)[0];
+            
+            if ($limits) {
+                $limits = xml_extract_values( transform_block($limits, 'limit') );
+                $parse_result->{'limits'} = $limits;
+            }
+
+            my $permissions = ($parse_result->{'data'} =~ m#<permissions>(.*?)</permissions>#sio)[0];
+
+            if ($permissions){
+                $permissions = xml_extract_values( transform_block($permissions, 'permission') );
+                $parse_result->{'permissions'} = $permissions;
+            }
 
             $parse_result->{'data'} = xml_extract_values(
                     ( $parse_result->{'data'} 
@@ -338,6 +358,17 @@ sub get_response_parse {
     return $parse_result;
 }
 
+
+sub transform_block {
+    my ($block, $sub_block_name) = @_; 
+
+    for ($block) {
+        s#<name>(.*?)</name><value>(.*?)</value>#<$1>$2</$1>#sgi;
+        s#</?$sub_block_name>##sgi;
+    }
+
+    return $block;
+}
 
 # Input data control for create sub
 # STATIC
