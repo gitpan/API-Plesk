@@ -195,6 +195,9 @@ sub abstract_parser {
     my $operation_type  = shift; # del, add, set, get
     my $xml_from_server = shift;
     my $required_data   = shift; # arref
+    my $system_error_block_name = shift;
+
+    $system_error_block_name ||= 'system';
 
     return '' unless $operation_type    && 
                      $xml_from_server   && 
@@ -212,7 +215,7 @@ sub abstract_parser {
         }
     } else {
         $xml_cut = ($xml_from_server 
-                    =~ m#<system>(.*?)</system>#gis)[0];
+                    =~ m#<$system_error_block_name>(.*?)</$system_error_block_name>#gis)[0];
         if ($xml_cut) {
             push @result_blocks, $xml_cut;
         } else {
