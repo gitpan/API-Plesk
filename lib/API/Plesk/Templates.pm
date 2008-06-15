@@ -50,6 +50,7 @@ Creating templates via API possible, but not implemented.
 =item get(%params)
 
 Params:
+
   name or id -- name or identifier desired template
   type can be 'domain' or 'account', has been implemented only account.
 

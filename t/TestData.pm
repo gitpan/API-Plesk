@@ -154,7 +154,7 @@ sub check_input_data {
     my $plesk_client = shift;
 
     my $general_info = {
-        pname   => $params->{pname}, # utf8 string 
+        pname   => $params->{pname},  # utf8 string 
         login   => $params->{login},
         passwd  => $params->{passwd},
         phone   => $params->{phone},

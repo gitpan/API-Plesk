@@ -20,7 +20,7 @@ use LWP::UserAgent;
 
 use API::Plesk::Response;
 
-our $VERSION = '1.04';
+our $VERSION = '1.05';
 
 =head1 NAME
 
@@ -64,10 +64,11 @@ Nothing.
 Create new class instance.
 
 Required params:
- api_version -- default: 1.5.0.0
- username -- Plesk user name.
- password -- Plesk password.
- url -- full url to Plesk XML RPC gate (https://ip.ad.dr.ess:8443/enterprise/control/agent.php).
+
+  api_version -- default: 1.5.0.0
+  username -- Plesk user name.
+  password -- Plesk password.
+  url -- full url to Plesk XML RPC gate (https://ip.ad.dr.ess:8443/enterprise/control/agent.php).
 
 =cut
 
@@ -99,6 +100,7 @@ All other methods are loaded by Autoload from corresponding modules.
 Execute some operations (see API::Plesk::* modules documentation).
 
 Example:
+ 
   my $res = $plesk_client->Func_Module->operation_type(%params); 
   # Func_Module -- module in API/Plesk folder
   # operation_type -- sub which defined in Func_Module.
@@ -183,15 +185,24 @@ sub check_xml_answer {
     
     my @errors;
     if (ref $result eq 'ARRAY') {
-        for (@$result) {
-         
-            push @errors, "$_->{errcode}: $_->{errtext}" if  $_ ->{errcode};
+        for (@$result) {          
+            if ($_->{errcode}) {
+                for ($_->{errtext}) {
+                    s/&quot;/"/sgio;
+                }
 
+                push @errors, "$_->{errcode}: $_->{errtext}";
+            }
         }
     } elsif (ref $result eq 'HASH') {
         
-        push @errors, "$result->{'errcode'}: $result->{errtext}"
-            if $result->{'errcode'};
+        if ($result->{'errcode'}) {
+            for ($result->{errtext}) {
+                $result->{errtext} =~ s/&quot;/"/sgio;
+            }
+
+            push @errors, "$result->{'errcode'}: $result->{errtext}";
+        }
         $result = [ $result ]; # construct arref of hashref
     }
 

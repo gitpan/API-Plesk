@@ -49,14 +49,17 @@ The method used to add domain hosting account to a certain Plesk account.
 =item create(%params)
 
 Params:
- dname - domain name,
- ip  - ip address for hosting (shared),
- client_id - client id in Plesk.
- ftp_login  - ftp login for hosting,
- ftp_password - ftp pass for hosting,
- template - domain template name in Plesk.
 
-Return: response object with created domain id in data filed.
+  dname - domain name,
+  ip  - ip address for hosting (shared),
+  client_id - client id in Plesk.
+  ftp_login  - ftp login for hosting,
+  ftp_password - ftp pass for hosting,
+  template - domain template name in Plesk.
+
+Return:
+  
+  response object with created domain id in data filed.
 
 =back
 

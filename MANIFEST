@@ -3,6 +3,8 @@ Changes
 lib/API/Plesk.pm
 lib/API/Plesk/Accounts.pm
 lib/API/Plesk/Complex.pm
+lib/API/Plesk/Databases.pm
+lib/API/Plesk/DatabaseUsers.pm
 lib/API/Plesk/Domains.pm
 lib/API/Plesk/Methods.pm
 lib/API/Plesk/Response.pm
@@ -13,6 +15,8 @@ README
 t/accounts.t
 t/comm-plesk.t
 t/complex.t
+t/databases.t
+t/databaseusers.t
 t/domains.t
 t/fake.t
 t/methods.t

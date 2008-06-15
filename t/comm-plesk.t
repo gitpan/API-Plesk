@@ -17,7 +17,7 @@ my %data_accumulator_for_online_tests;
 BEGIN {
     $allow_plesk_onlite_tests = $ENV{'online'};
 
-    plan tests => 32;
+    plan tests => 36;
 }
 
 BEGIN {
@@ -34,7 +34,7 @@ BEGIN {
 ##
 
 SKIP: {
-    skip "This test require internet connection! See README", 30 if !$allow_plesk_onlite_tests;
+    skip "This test require internet connection! See README", 34 if !$allow_plesk_onlite_tests;
 
     my $new_plesk_client = API::Plesk->new(%TestData::online_plesk_valid_params);
     my $plesk_client = API::Plesk->new(%TestData::online_plesk_valid_params);
@@ -232,9 +232,10 @@ SKIP: {
     my ($server_ip_for_tests) = ($result_template_get_ip_query->get_data->[0]->{'ip-pool'}
         =~ m#<ip-address>(\d+\.\d+\.\d+\.\d+)</ip-address>#g);
 
+    my $domain_id = 0;
 
     like(
-        $new_plesk_client->Domains->create(
+        $domain_id = $new_plesk_client->Domains->create(
             dname           => 'yandex.ru',
             ip              => $server_ip_for_tests,
             client_id       => $data_accumulator_for_online_tests {user_id_from_create_with_tmpl_name},
@@ -245,6 +246,40 @@ SKIP: {
         qr/\d+/,
         'Domains_create test'
     );
+    
+    my $add_db_res = $new_plesk_client->Databases->create(
+        'name'          => 'my_new_base',
+        'domain-id'     => $domain_id,
+        'type'          => 'mysql',
+        'db-server-id'  => 1,
+    );
+
+    like($add_db_res->get_id, qr/\d+/, 'Add db to domain ');
+
+    my $add_user_to_db_result = $new_plesk_client->DatabaseUsers->create(
+        'login'     => 'nrg_main',
+        'db-id'     => $add_db_res->get_id,
+        'password'  => 'qwerty',
+    );
+
+    like( $add_user_to_db_result->get_id, qr/\d+/, 'Add user to db' );
+
+    # db & db user present in Plesk at this moment ;)
+
+    # del user by id
+    my $del_db_user_res = $new_plesk_client->DatabaseUsers->delete(
+        'id' => $add_user_to_db_result->get_id,
+    );
+
+    ok( $del_db_user_res->is_success, 'Del db user by id from domain' );
+
+    
+    # del db by db-id
+    my $del_db_res = $new_plesk_client->Databases->delete(
+        'db-id' => $add_db_res->get_id,
+    );
+
+    ok( $del_db_res->is_success, 'Del db by db-id from domain');
 
 
     is_deeply(

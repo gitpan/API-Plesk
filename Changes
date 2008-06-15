@@ -10,5 +10,8 @@ Revision history for Perl extension API::Plesk.
 1.03 May 25 17:30:43 SAMST 2008
     - Small bug fix
     - Fixed bug in Tariff Plan Change sub (Complex.pm) 
-1.04 May  29 04:14:14 SAMST 2008
+1.04 May 29 04:14:14 SAMST 2008
     - Added the ability to fine tuning the abstract_parser sub (for API::PleskExpand)
+1.05 Jun 15 19:46:22 SAMST 2008
+    - Added full support operations with databases and db users
+    - Fixed errors in pod documentation
