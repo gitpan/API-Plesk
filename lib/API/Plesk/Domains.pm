@@ -153,14 +153,34 @@ sub delete_response_parse {
 # Get all element data
 # STATIC
 sub get {
-    # stub
+    my %params = @_;
+
+    my $filter;
+
+    if ($params{client_id}) {
+        $filter =  create_filter(
+            login_field_name => 'client_id',
+            client_id        =>  $params{client_id} 
+        );
+    } elsif ($params{client_login}) {
+        $filter =  create_filter(
+            login_field_name => 'client_login',
+            client_login     =>  $params{client_login} 
+        );
+    } else {
+        return '';
+    }
+
+    return construct_request_xml( 'domain', 'get', $filter . create_node('dataset', create_node('stat')));
 }
 
 
 # GET response handler 
 # STATIC
 sub get_response_parse {
-    # stub
+    my $xml_response = shift;
+
+    return $xml_response ? abstract_parser('get', $xml_response, [ ]) : '';
 }
 
 

@@ -175,9 +175,22 @@ sub xml_extract_values {
     my $xml_data = shift;
     return '' unless $xml_data;
 
-    my %result = $xml_data =~ m#<(.*?)>(.*?)</\1>#gsi;
+    my $result = { };
 
-    return \%result;
+    while ( $xml_data =~ m#<(.*?)>(.*?)</\1>#gsi ) {
+        unless($result->{$1}) {
+            $result->{$1} = $2;
+        } else {
+            if (ref $result->{$1} eq 'ARRAY') {
+                push @{ $result->{$1} }, $2; 
+            } else {
+                my $first_elem = $result->{$1};
+                $result->{$1} = [ $first_elem, $2 ];
+            }
+        }
+    }
+
+    return $result;
 }
 
 =item abstract_pasrser($operation_type, $xml_from_server, $required_data)

@@ -33,7 +33,7 @@ API::Plesk::Databases - extension module for managing databases.
  $plesk_client->Databases->create(
     'name'         => 'good_base',
     'domain-id'    =>  12345,
-    'type'         => 'MySQL',
+    'type'         => 'mysql',
     'db-server-id' => 1,
  );
 

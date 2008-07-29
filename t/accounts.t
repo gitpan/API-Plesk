@@ -5,6 +5,7 @@ use warnings;
 
 use Carp;
 use Test::More;
+use Test::LongString;
 use Data::Dumper;
 
 use lib 't';
@@ -57,7 +58,7 @@ ok(
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::create(
         'general_info'    => $test_user_data,
         'template-name'   => 'tarif'
@@ -77,21 +78,21 @@ is_deeply(
 
 # delete test
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::delete( all => 1 ),
     '<client><del><filter/></del></client>',
     'generation XML for delete all'
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::delete( id => 152 ),
     '<client><del><filter><id>152</id></filter></del></client>',
     'generation XML for delete by id'
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::delete( login => 'nrg' ),
     '<client><del><filter><login>nrg</login></filter></del></client>',
     'generation XML for delete by login'
@@ -117,7 +118,7 @@ ok(
 );
 
 
-is_deeply(
+is_string(
     API::Plesk::Accounts::modify( 
         all => 1,
         new_data => { phone => '55555' } 
@@ -130,7 +131,7 @@ is_deeply(
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::modify( 
         id => 12345,
         new_data => {phone => '55555'}
@@ -144,7 +145,7 @@ is_deeply(
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::modify(
         login => 'nrg_pavel',
         new_data => {phone => '55555'}
@@ -159,14 +160,14 @@ is_deeply(
 
 # get test 
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::get( all => 1 ), 
     '<client><get><filter/><dataset><gen_info/></dataset></get></client>',
     'generation XML for get all'
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Accounts::get( login => 'nrg' ),
 
     '<client><get><filter><login>nrg</login></filter>' . 

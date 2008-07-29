@@ -15,3 +15,7 @@ Revision history for Perl extension API::Plesk.
 1.05 Jun 15 19:46:22 SAMST 2008
     - Added full support operations with databases and db users
     - Fixed errors in pod documentation
+1.06
+    Jul 13 19:48:47 SAMST 2008
+    - More improvements in tests
+    - Get user domains list by login or client id

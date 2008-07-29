@@ -5,6 +5,7 @@ use warnings;
 
 use Carp;
 use Test::More;
+use Test::LongString;
 use Data::Dumper;
 
 use lib 't';
@@ -16,7 +17,7 @@ BEGIN {
 
 BEGIN { use_ok( 'API::Plesk::Databases' ); }
 
-is_deeply(
+is_string(
     API::Plesk::Databases::create(
         'name'          => 'my_new_base',
         'domain-id'     => 555,
@@ -31,7 +32,7 @@ is_deeply(
     'API::Plesk::Databases::create test'
 );
 
-is_deeply(
+is_string(
     API::Plesk::Databases::delete(
         'db-id' => '123123',
     ),
@@ -39,7 +40,7 @@ is_deeply(
     'API::Plesk::Databases::delete by db-id test'
 );
 
-is_deeply(
+is_string(
     API::Plesk::Databases::delete(
         'domain-name' => 'yandex.ru', # kill ya.ru :)
     ),
@@ -47,7 +48,7 @@ is_deeply(
     'API::Plesk::Databases:delete by domain-name test'
 );
 
-is_deeply(
+is_string(
     API::Plesk::Databases::delete('domain-id' => 123),
     '<database><del-db><filter><domain-id>123</domain-id></filter></del-db></database>',
     'API::Plesk::Databases::delete domain-id test'

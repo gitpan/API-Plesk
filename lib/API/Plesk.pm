@@ -20,7 +20,7 @@ use LWP::UserAgent;
 
 use API::Plesk::Response;
 
-our $VERSION = '1.05';
+our $VERSION = '1.06';
 
 =head1 NAME
 
@@ -125,7 +125,7 @@ sub plesk_query {
 
     $ext_params ||= '';
 
-    return $self->check_xml_answer( $self->_execute_query($query), $parser_subref, $ext_params);
+    return $self->check_xml_answer( $self->_execute_query($query) || '', $parser_subref, $ext_params);
 }
 
 

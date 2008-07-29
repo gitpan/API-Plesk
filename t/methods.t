@@ -5,6 +5,7 @@ use warnings;
 
 use Carp;
 use Test::More;
+use Test::LongString;
 use Data::Dumper;
 
 use lib 't';
@@ -19,7 +20,7 @@ BEGIN { use_ok( 'API::Plesk::Methods' ); }
 
 # construct_request_xml
 
-is_deeply(
+is_string(
     API::Plesk::Methods::construct_request_xml(
         'client-template',
         'get', 111
@@ -31,7 +32,7 @@ is_deeply(
 );
 
 
-is_deeply(
+is_string(
     API::Plesk::Methods::construct_request_xml(
         'client-template',
         'get'
@@ -48,19 +49,19 @@ ok(
 
 # Generate_settings_block
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_settings_block('permission'),
     '<permissions/>', 'blank permission query to generate_settings_block'
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_settings_block ('limit'),
     '<limits/>', 'blank limit query to generate_settings_block'
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_settings_block(
         'limit', 
         key1  => 'value1',
@@ -75,7 +76,7 @@ is_deeply(
 
 # Generate_limits_block
 
-is_deeply(
+is_string(
     API::Plesk::Methods::generate_settings_block('limit'),
     '<limits/>', 
     'test auto generated generate_limits_block sub' 
@@ -83,7 +84,7 @@ is_deeply(
 
 # Generate_permissions_block
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_settings_block('permission'),
     '<permissions/>',
     'test auto generated generate_permissions_block sub' 
@@ -91,13 +92,13 @@ is_deeply(
 
 # Generate_gen_infos
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_info_block('gen_info'),
     '<gen_info/>',
     'test generate_gen_infos_block (blank)'
 );
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_info_block('gen_info', name => 'Pavel'),
     '<gen_info><name>Pavel</name></gen_info>',
     'test generate_gen_infos_block ( name => Pavel )'
@@ -105,13 +106,13 @@ is_deeply(
 
 # Generate_datasets_block
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_info_block('dataset'),
     '<dataset/>',
     'test generate_datasets_block ( blank )'
 );
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::generate_info_block('dataset', name => 'Pavel'),
     '<dataset><name>Pavel</name></dataset>',
     'test generate_datasets_block ( name => Pavel )'
@@ -119,7 +120,7 @@ is_deeply(
 
 # Create_filter
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::create_filter(
         login_field_name => 'login',
         login            => 'userlogin' ), 
@@ -128,7 +129,7 @@ is_deeply(
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::create_filter( id => '12345' ), 
     '<filter><id>12345</id></filter>',
     'create_filter( id ) check'            
@@ -143,14 +144,14 @@ is(
 
 # Create_node test
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::create_node('name', 'Pavel'),
     '<name>Pavel</name>',
     'create_node test'  
 );
 
 
-is_deeply( 
+is_string( 
     API::Plesk::Methods::create_node('name'),
     '<name/>',
     'create_node blank value test'  
