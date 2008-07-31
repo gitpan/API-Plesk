@@ -15,6 +15,7 @@ WriteMakefile
                            'LWP::UserAgent'   => '0',
                            'Test::More'       => '0',
                            'Test::LongString' => '0',
+                           'URI'              => '0',
                           },
           INSTALLDIRS  => 'site',
           EXE_FILES    => [],

@@ -20,7 +20,7 @@ use LWP::UserAgent;
 
 use API::Plesk::Response;
 
-our $VERSION = '1.06';
+our $VERSION = '1.07';
 
 =head1 NAME
 

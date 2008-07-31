@@ -15,9 +15,12 @@ my $build = Module::Build->new(
         'Getopt::Long'    => 0,
         'HTTP::Request'   => 0,
         'Carp'            => 0,
+        'URI'             => 0,
     },
     build_requires => {
-        'Test::More'      => 0,
+        'Test::More'       => 0,
+        'Test::LongString' => 0,
+        'URI'              => 0,
     },
     create_makefile_pl => 'traditional',
 );

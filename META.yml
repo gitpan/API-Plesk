@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                API-Plesk
-version:             1.06
+version:             1.07
 abstract:            API::Plesk - OOP interface to the Plesk XML API
 license:             perl
 author:              
@@ -15,6 +15,7 @@ requires:
     LWP::UserAgent:                0
     Test::LongString:              0
     Test::More:                    0
+    URI:                           0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html
     version: 1.3
