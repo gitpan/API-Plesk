@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               API-Plesk
-version:            1.08
+version:            1.09
 abstract:           API::Plesk - OOP interface to the Plesk XML API
 author:
     - NRG <pavel.odintsov@googlemail.com>

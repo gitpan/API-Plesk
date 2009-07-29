@@ -1,6 +1,6 @@
 #
 # DESCRIPTION:
-#   Plesk communicate interface. Static methods for managing databases.
+#   Plesk communicate interface. Static methods for managing database users.
 # AUTHORS:
 #   Pavel Odintsov (nrg) <pavel.odintsov@gmail.com>
 #
@@ -18,7 +18,7 @@ our $VERSION = '1.03';
 
 =head1 NAME
 
-API::Plesk::DatabaseUsers - extension module for managing database users.
+API::Plesk::Databases - extension module for managing databases.
 
 =head1 SYNOPSIS
 
@@ -33,7 +33,7 @@ API::Plesk::DatabaseUsers - extension module for managing database users.
  $plesk_client->Databases->create(
     'name'         => 'good_base',
     'domain-id'    =>  12345,
-    'type'         => 'MySQL',
+    'type'         => 'mysql',
     'db-server-id' => 1,
  );
 
@@ -41,17 +41,18 @@ API::Plesk::DatabaseUsers - extension module for managing database users.
 
 =item create(%params)
 
-The method used to add database user to a certain Plesk database.
+The method used to add database to a certain Plesk domain account.
 
 Params:
 
- login - user name (lower case preferably),
- db-id - it specifies ID of the database where a new user will be created,
- password - it specifies the password of the database user.
+ name - db name (lower case preferably),
+ domain-id - domain id in Plesk,
+ type - type of bd: mysql, mssql (Windows only) or postrgesql,
+ db-server-id - db server identification number (1 -- default),
 
 Return:
 
- response object with created user id in data filed.
+ response object with created database id in data filed.
 
 =cut
 
@@ -84,12 +85,13 @@ sub create_response_parse {
 
 =item delete(%params)
 
-Delete Plesk db user account from a certain base.
+Delete database account for certain Plesk Domain (selected by id or name).
 
 Params:
 
- 'db-id' - database id (del all users from a certain db) or
- 'id' - db user id in Plesk (del one user).
+ 'db-id' - database id or 
+ 'domain-id' - delete all bases for domain with certain id in Plesk or 
+ 'domain-name' - delete all bases for domain with certain domain name in Plesk,
 
 Return:
 
@@ -110,7 +112,7 @@ sub delete {
         $db_filter = create_filter(
             login_field_name => 'id',
             'id'             => $params{'id'}
-        ); 
+       ); 
     } elsif ( $params{'db-id'} ) {
         $db_filter = create_filter(
             login_field_name => 'db-id',
@@ -130,20 +132,28 @@ sub delete_response_parse {
     my $xml_response = shift;
 
     return $xml_response ? abstract_parser('del-db-user', $xml_response, [ ]) : '';
+    # stub
 }
 
 
 # Get all element data
 # STATIC
 sub get {
-    # stub
+    my %params = @_;
+
+    return "<database><get-db-users><filter><db-id>$params{database_id}</db-id>" . 
+        "</filter></get-db-users></database>";
 }
 
 
-# GET response handler 
+# GET response handler
 # STATIC
 sub get_response_parse {
-    # stub
+    my $xml_response = shift;
+
+    my $result = $xml_response ? abstract_parser('get-db-users', $xml_response, [ ]) : '';
+    ## warn Dumper($result);
+    return $result;
 }
 
 
@@ -176,6 +186,7 @@ Blank.
 =head1 AUTHOR
 
 Odintsov Pavel E<lt>nrg[at]cpan.orgE<gt>
+Nikolay Shulyakovskiy E<lt>shulyakovskiy[at]rambler.ruE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
