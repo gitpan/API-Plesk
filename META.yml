@@ -1,29 +1,48 @@
---- #YAML:1.0
-name:               API-Plesk
-version:            1.09
-abstract:           API::Plesk - OOP interface to the Plesk XML API
+---
+abstract: 'OO interface to the Plesk XML API (http://www.parallels.com/en/products/plesk/).'
 author:
-    - NRG <pavel.odintsov@googlemail.com>
-license:            perl
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
+  - 'Ivan Sokolov <ivsokolov@cpan.org>'
 build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    Carp:              0
-    Data::Dumper:      0
-    Getopt::Long:      0
-    HTTP::Request:     0
-    LWP::UserAgent:    0
-    Test::LongString:  0
-    Test::More:        0
-    URI:               0
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.50
+  Test::LongString: 0
+  Test::More: 0
+  URI: 0
+configure_requires:
+  Module::Build: 0.36
+generated_by: 'Module::Build version 0.3607'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: API-Plesk
+provides:
+  API::Plesk:
+    file: lib/API/Plesk.pm
+    version: 2.00_1
+  API::Plesk::Component:
+    file: lib/API/Plesk/Component.pm
+  API::Plesk::Customer:
+    file: lib/API/Plesk/Customer.pm
+  API::Plesk::DNS:
+    file: lib/API/Plesk/DNS.pm
+  API::Plesk::Database:
+    file: lib/API/Plesk/Database.pm
+  API::Plesk::Response:
+    file: lib/API/Plesk/Response.pm
+  API::Plesk::ServicePlan:
+    file: lib/API/Plesk/ServicePlan.pm
+  API::Plesk::ServicePlanAddon:
+    file: lib/API/Plesk/ServicePlanAddon.pm
+  API::Plesk::Site:
+    file: lib/API/Plesk/Site.pm
+  API::Plesk::Webspace:
+    file: lib/API/Plesk/Webspace.pm
+requires:
+  Carp: 0
+  Data::Dumper: 0
+  HTTP::Request: 0
+  LWP::UserAgent: 0
+  XML::Fast: 0
+  version: 0
+resources:
+  license: http://dev.perl.org/licenses/
+version: 2.00_1

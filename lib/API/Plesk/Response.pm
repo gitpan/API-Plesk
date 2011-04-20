@@ -1,18 +1,111 @@
-#
-# DESCRIPTION:
-#   Plesk communicate interface. Server response class.
-# AUTHORS:
-#   Pavel Odintsov (nrg) <pavel.odintsov@gmail.com>
-#
-#========================================================================
 
 package API::Plesk::Response;
 
 use strict;
 use warnings;
 
-our $VERSION = '1.03';
+use Data::Dumper;
 
+sub new {
+    my ( $class, %attrs) = @_;
+    $class = ref $class || $class;
+    
+    my $operator  = $attrs{operator};
+    my $operation = $attrs{operation};
+    my $response  = $attrs{response};
+    my $results = [];
+    my $is_success = 1;
+
+    # internal API::Plesk error
+    if ( $attrs{error} ) {
+        $results = [{
+            errcode => '',
+            errtext => $attrs{error},
+            status  => 'error'
+        }];
+        $is_success = '';
+    }
+    # remote system plesk error
+    elsif ( exists $response->{packet}->{'system'} ) {
+        $results = [$response->{packet}->{'system'}];
+        $is_success = '';
+        $operator   = 'system';
+        $operation  = '';
+    }
+    else {
+        for my $result ( @{$response->{packet}->{$operator}->{$operation}->[0]->{result}} ) {
+            push @$results, $result;
+            $is_success = '' if $result->{status} && $result->{status} eq 'error';
+
+        }
+    }
+    
+    my $self = {
+        results     => $results,
+        operator   => $operator,
+        operation  => $operation,
+        is_success => $is_success,
+    };
+
+    return bless $self, $class;
+}
+
+sub is_success { $_[0]->{is_success} }
+
+sub id   { $_[0]->{results}->[0]->{id} }
+sub guid { $_[0]->{results}->[0]->{guid} }
+
+sub data {
+    my ( $self ) = @_;
+    return [] unless $self->is_success;
+    return [ map { $_->{data} || () } @{$self->{results}} ];
+}
+
+sub results { 
+    my ( $self ) = @_;
+    return undef unless $self->is_success;
+    return $self->{results} || [];
+}
+
+sub error_code { $_[0]->error_codes->[0]; }
+sub error_text { $_[0]->error_texts->[0]; }
+
+sub error { 
+    my ( $self ) = @_;
+    return ($self->{results}->[0]->{errcode} || '0') . ': ' .  $self->{results}->[0]->{errtext};
+}
+
+sub error_codes {
+    my ( $self ) = @_;
+    return [] if $self->is_success;
+    return [ map { $_->{errcode} || () } @{$self->{results}} ];
+}
+
+sub error_texts {
+    my ( $self ) = @_;
+    return [] if $self->is_success;
+    return [ map { $_->{errtext} || () } @{$self->{results}} ];
+}
+
+sub errors {
+    my ( $self ) = @_;
+    return [] if $self->is_success;
+    my @errors;
+    for ( @{$self->{results}} ) {
+        my $error = ($_->{errcode} || '0') . ': ' .  $_->{errtext};
+        push @errors, $error;
+    }
+    return \@errors;
+}
+
+sub is_connection_error {
+    my ( $self ) = @_;
+    return $self->error_text eq 'connection error' ? 1 : 0;
+}
+
+1;
+
+__END__
 
 =head1 NAME
 
@@ -20,189 +113,94 @@ API::Plesk::Response -  Class for processing server answers with errors handling
 
 =head1 SYNOPSIS
 
- use API::Plesk::Response;
- my $res = API::Plesk::Response->new($server_answer, @errors_list);
- # $server_answer -- data from server
- # @errors_list -- list of errors
+    my $res = API::Plesk::Response->new(
+        operator => 'customer',
+        operation => 'get',
+        response => 'xml answer from plesk api',        
+    );
+
+    $res->is_success;
+    $res->is_connection_error;
+
+    # get errors
+    $res->error_code;
+    $res->error_codes->[0];
+    $res->error_text;
+    $res->error_texts->[0];
+    $res->error;
+    $res->errors->[0];
+
+    # get data sections
+    $res->data->[0];
+
+    # get result sections
+    $res->results->[0];
+
+    # get id and guid
+    $res->id;
+    $res->guid;
+
 
 =head1 DESCRIPTION
 
-This class is intended for convenient processing results of work of methods of class API::Plesk.
+This class is intended for convenient processing results of Plesk API responses.
+Every operation of API::Plesk::Component return object of this class.
+And it get you easy way to manipulate with response from Plesk API.
 
 =head1 METHODS
 
 =over 3
 
-=item new($server_answer, @errors))
+=item new(%attributes)
 
-Create server response object.
+Create response object.
 
-API::Plesk::Response->new($server_answer, @errors)
-$server_answer - server answer,
-@errors - list of errors.
+=item is_success()
 
-=cut
+Returns true if all results have no errors.
 
-# Create server response object
-# STATIC, INSTANCE
-sub new {
-    my ($class, $server_answer, @errors) = @_;
+=item is_connection_error()
 
-    $class = ref $class || $class;
-    my $self = {
-                    error_codes  => scalar @errors > 0 ? \@errors : '',
-                    answer_data  => $server_answer || '',
-               };
+Returns true if connection error happened.
 
-    return bless $self, $class;
-}
+=item data()
 
-=item get_id
+    $response->data;
+    $response->data->[0];
 
-Get executed operation ID
+=item results()
 
-Return $self->get_data->[0]->{id}, if no errors and server answer consists of only one block.
+    $response->results;
+    $response->results->[0];
 
-=cut
+=item error_code()
 
-# Get executed operation ID
-# INSTANCE
-sub get_id {
-    my $self = shift;
+    $response->error_code;
 
-    return $self->is_success && length @{$self->get_data} == 1 ? 
-        $self->get_data->[0]->{id} : '';
-}
+=item error_codes()
 
-=item is_success
+    $response->error_codes->[0];
 
-Get operation result
+=item error_text()
 
-Return true if server answer not blank and no errors in answer.
+    $response->error_text;
 
-=cut
-
-# Return true if no errors in response
-# INSTANCE
-sub is_success {
-    my $self = shift;
-
-    my $has_errors = ref $self->{'error_codes'} eq 'ARRAY' && 
-                     scalar @{ $self->{'error_codes'} } > 0;
+=item error_texts()
     
-    return ($has_errors || !$self->{'answer_data'}) ? '' : 1;
-}
+    $response->error_texts->[0];
 
-=item get_data
+=item error()
 
-Get data from response
+    $response->error;
 
-Return answer response if $instance->is_success is true.
-
-=cut
-
-# Get data from response
-# INSTANCE
-sub get_data {
-    my $self = shift;
-
-    return $self->is_success ? $self->{'answer_data'} : '';
-}
-
-=item get_error_code
-
-Get all error codes from response as arref
-
-=cut
-
-# Get all error codes from message as arref
-# INSTANCE
-sub get_error_codes {
-    my $self = shift;
-
-    if (ref $self->{'error_codes'} eq 'ARRAY') {
-        return wantarray ? @{ $self->{'error_codes'} } : $self->{'error_codes'};
-    } else {
-        return wantarray ? ( ) : '';
-    }
-}
-
-
-=item get_error_string
-
-Return joined by ', ' error codes.
+=item errors()
+    
+    $response->errors->[0];
 
 =back
 
-=cut
-
-# Get error codes as string
-# INSTANCE
-sub get_error_string {
-    my $self = shift;
-
-    return join ', ', $self->get_error_codes;
-}
-
-
-1;
-__END__
-
-=head1 EXAMPLES
-
-  use API::Plesk::Response;
-
-  # API::Plesk::Response->new ('server answer', @errors_list)
-
-  # Good answers
-
-  my $res1 = API::Plesk::Response->new('server answer', '');
-  print 'All ok' if $res1->is_success;
-  # print "All ok"
-
-  print $res1->get_data;
-  # print "server answer"
-
-  print $res1->get_error_string;
-  # Print '', # because no errors
-
-
-  # One error present
-
-  my $res2 = API::Plesk::Response->new('', 'error1');
-  print 'Operation failed' unless $res2->is_success; 
-  # print "Operation Failed"
-
-  print $res2->get_data;
-  # print ''
-
-  print $res2->get_error_string;
-  # Print '', # print "error1"
-
-  # Multiple errors
-
-  my $res3 = API::Plesk::Response->new('', 'error1', 'error2', 'error3');
-  print $res3->get_error_string; # print "error1, error2, error3"
-
-=head1 EXPORT
-
-None by default.
-
-=head1 SEE ALSO
-
-Blank.
-
 =head1 AUTHOR
 
-Odintsov Pavel E<lt>nrg[at]cpan.orgE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright (C) 2008 by NRG
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.8 or,
-at your option, any later version of Perl 5 you may have available.
-
+Ivan Sokolov <lt>ivsokolov@cpan.org<gt>
 
 =cut
