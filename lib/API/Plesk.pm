@@ -14,7 +14,7 @@ use version;
 
 use API::Plesk::Response;
 
-our $VERSION = '2.00_1';
+our $VERSION = '2.00_2';
 
 # creates accessors to components
 # can support old interface of API::Plesk
@@ -155,11 +155,11 @@ sub _render_xml {
             $value = _render_xml(&$value);
         }
 
-        if ( $value ) {
-            $xml .= "<$tag>$value</$tag>";
+        if ( !defined $value or $value eq '' ) {
+            $xml .= "<$tag/>";
         }
         else {
-            $xml .= "<$tag/>";
+            $xml .= "<$tag>$value</$tag>";
         }
     }
 

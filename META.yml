@@ -17,7 +17,7 @@ name: API-Plesk
 provides:
   API::Plesk:
     file: lib/API/Plesk.pm
-    version: 2.00_1
+    version: 2.00_2
   API::Plesk::Component:
     file: lib/API/Plesk/Component.pm
   API::Plesk::Customer:
@@ -45,4 +45,4 @@ requires:
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 2.00_1
+version: 2.00_2
