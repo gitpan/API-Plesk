@@ -40,7 +40,6 @@ sub sort_params {
         if ( ref $key ) {
             ($key) = grep { exists $params->{$_} } @$key 
         }
-
         push @sorted, {$key => $params->{$key}}
             if exists $params->{$key};
 
@@ -66,7 +65,7 @@ sub check_hosting {
     
     if ( $type eq 'vrt_hst' ) {
 
-        $self->check_required_params($hosting, qw(ftp_login ftp_passwd));
+        $self->check_required_params($hosting, qw(ftp_login ftp_password));
 
         my @properties;
         for my $key ( keys %$hosting ) {
@@ -99,6 +98,26 @@ sub check_hosting {
     }
 
     confess "Unknown hosting type!";
+}
+
+sub prepare_filter {
+    my ( $self, $filter, %opts ) = @_;
+
+    my @filter;
+    my $sort = $opts{sort_keys} || [keys %$filter];
+
+    for my $key ( @$sort ) {
+        if ( ref $filter->{$key} eq 'ARRAY' ) {
+            for my $value ( @{$filter->{$key}} ) {
+                push @filter, { $key => $value };
+            }
+        }
+        else {
+            push @filter, { $key => $filter->{$key} };
+        }
+    }
+
+    return @filter ? \@filter : '';
 }
 
 1;

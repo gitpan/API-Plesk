@@ -9,7 +9,7 @@ use lib 't';
 use TestData;
 
 BEGIN {
-    plan tests => 9;
+    plan tests => 10;
     use_ok( 'API::Plesk::Component' );
 }
 
@@ -50,7 +50,7 @@ eval {
         hosting => {
             type => 'vrt_hst',
             ftp_login => 'ert',
-            ftp_passwd => '123',
+            ftp_password => '123',
             ip_address => '12.34.56.78',
         }
     })
@@ -62,7 +62,7 @@ eval {
         hosting => {
             type => 'vrt_hst',
             ftp_login => 'ert',
-            ftp_passwd => '123',
+            ftp_password => '123',
         }
     })
 };
@@ -73,10 +73,21 @@ eval {
         hosting => {
             type => 'vrt_ht',
             ftp_login => 'ert',
-            ftp_passwd => '123',
+            ftp_password => '123',
         }
     })
 };
 like($@, qr/Unknown hosting type!/); 
+
+is_deeply(
+    $c->prepare_filter({id => [qw(1 2 3)], name => 'id'}, sort_keys => [qw(id name)]),
+    [
+        { id => 1 },
+        { id => 2 },
+        { id => 3 },
+        { name => 'id' },
+    ],
+    'prepare_filter'
+);
 
 

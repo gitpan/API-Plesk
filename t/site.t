@@ -32,19 +32,19 @@ is_deeply(
         },
         bulk_send => 1
     ),
-    { 
-        gen_setup => [
+    [ 
+        {gen_setup => [
             {name => 'test.ru'},
             {'webspace-name' => 'main.ru'},
-        ],
-        hosting => {
+        ]},
+        {hosting => {
             std_fwd => {
                 dest_url => 'fwd.ru',
                 ip_address => '12.34.56.78',
             }
-        }
+        }}
 
-    },
+    ],
     'add'
 );
 
@@ -58,31 +58,31 @@ is_deeply(
             type => 'vrt_hst',
             ip_address => '12.34.56.78',
             ftp_login => 'qwerty',
-            ftp_passwd => '12345',
+            ftp_password => '12345',
             ip_address => '12.34.56.78',
         },
         bulk_send => 1
     ),
     {
         filter => {name => 'test.ru'},
-        values => { 
-            gen_setup => {
+        values => [
+            {gen_setup => {
                 name => 'test.ru',
-            },
-            hosting => {
+            }},
+            {hosting => {
                 vrt_hst => [
                     { property => [
                         {name => 'ftp_login'},
                         {value => 'qwerty'}
                     ]},
                     { property => [
-                        {name => 'ftp_passwd'},
+                        {name => 'ftp_password'},
                         {value => '12345'}
                     ]},
                     {ip_address => '12.34.56.78'},
                 ]
-            }
-        }
+            }}
+        ]
 
     },
     'set'

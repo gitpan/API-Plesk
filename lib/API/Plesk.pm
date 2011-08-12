@@ -14,7 +14,7 @@ use version;
 
 use API::Plesk::Response;
 
-our $VERSION = '2.00_2';
+our $VERSION = '2.00_3';
 
 # creates accessors to components
 # can support old interface of API::Plesk
@@ -23,9 +23,15 @@ init_components(
     customer           => [['1.6.3.0', 'Customer']],
     webspace           => [['1.6.3.0', 'Webspace']],
     site               => [['1.6.3.0', 'Site']],
+    site_alias         => [['1.6.3.0', 'SiteAlias']],
+    sitebuilder        => [['1.6.3.0', 'SiteBuilder']],
+    ftp_user           => [['1.6.3.0', 'FTPUser']],
     service_plan       => [['1.6.3.0', 'ServicePlan']],
     service_plan_addon => [['1.6.3.0', 'ServicePlanAddon']],
     database           => [['1.6.3.0', 'Database']],
+    webuser            => [['1.6.3.0', 'WebUser']],
+    dns                => [['1.6.3.0', 'DNS']],
+    mail               => [['1.6.3.0', 'Mail']],
    
     # old 
     Accounts => [['1.5.0.0', 'Accounts']],
@@ -260,17 +266,29 @@ Naming of packages and methods become similar to the same operators and operatio
 
 Partially implemented:
 
-Api::Plesk::Customer 
+API::Plesk::Customer 
 
-Api::Plesk::Webspace
+API::Plesk::Database
 
-Api::Plesk::ServicePlan
+API::Plesk::DNS
 
-Api::Plesk::ServicePlanAddon
+API:Plesk::FTPUser
 
-Api::Plesk::Site
+API:Plesk::Mail
 
-Api::Plesk::Database
+API::Plesk::ServicePlan
+
+API::Plesk::ServicePlanAddon
+
+API::Plesk::Site
+
+API::Plesk::SiteAlias
+
+API::Plesk::SiteBuilder
+
+API::Plesk::Webspace
+
+API::Plesk::WebUser
 
 =head1 COMPATIBILITY WITH VERSION 1.*
 
