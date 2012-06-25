@@ -14,7 +14,7 @@ use version;
 
 use API::Plesk::Response;
 
-our $VERSION = '2.00_3';
+our $VERSION = '2.00';
 
 # creates accessors to components
 # can support old interface of API::Plesk
@@ -32,6 +32,7 @@ init_components(
     webuser            => [['1.6.3.0', 'WebUser']],
     dns                => [['1.6.3.0', 'DNS']],
     mail               => [['1.6.3.0', 'Mail']],
+    user               => [['1.6.3.0', 'User']],
    
     # old 
     Accounts => [['1.5.0.0', 'Accounts']],
@@ -207,7 +208,7 @@ sub load_component {
         # select compitable version of component
         if ( $version >= $item->[0] ) {
 
-            my $pkg = ref($self) . '::' . $item->[1];
+            my $pkg = 'API::Plesk::' . $item->[1];
 
             my $module = "$pkg.pm";
                $module =~ s/::/\//g;
@@ -289,6 +290,8 @@ API::Plesk::SiteBuilder
 API::Plesk::Webspace
 
 API::Plesk::WebUser
+
+API::Plesk::User
 
 =head1 COMPATIBILITY WITH VERSION 1.*
 

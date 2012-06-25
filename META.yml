@@ -9,7 +9,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.38
 dynamic_config: 1
-generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.112150'
+generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.110930001'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -18,7 +18,7 @@ name: API-Plesk
 provides:
   API::Plesk:
     file: lib/API/Plesk.pm
-    version: 2.00_3
+    version: 2.00
   API::Plesk::Component:
     file: lib/API/Plesk/Component.pm
     version: 0
@@ -36,6 +36,9 @@ provides:
     version: 0
   API::Plesk::Mail:
     file: lib/API/Plesk/Mail.pm
+    version: 0
+  API::Plesk::Mock:
+    file: lib/API/Plesk/Mock.pm
     version: 0
   API::Plesk::Response:
     file: lib/API/Plesk/Response.pm
@@ -55,6 +58,9 @@ provides:
   API::Plesk::SiteBuilder:
     file: lib/API/Plesk/SiteBuilder.pm
     version: 0
+  API::Plesk::User:
+    file: lib/API/Plesk/User.pm
+    version: 0
   API::Plesk::WebUser:
     file: lib/API/Plesk/WebUser.pm
     version: 0
@@ -71,4 +77,4 @@ requires:
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 2.00_3
+version: 2.00

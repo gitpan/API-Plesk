@@ -4,7 +4,7 @@
       "Ivan Sokolov <ivsokolov@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.110930001",
    "license" : [
       "perl_5"
    ],
@@ -41,7 +41,7 @@
    "provides" : {
       "API::Plesk" : {
          "file" : "lib/API/Plesk.pm",
-         "version" : "2.00_3"
+         "version" : "2.00"
       },
       "API::Plesk::Component" : {
          "file" : "lib/API/Plesk/Component.pm",
@@ -65,6 +65,10 @@
       },
       "API::Plesk::Mail" : {
          "file" : "lib/API/Plesk/Mail.pm",
+         "version" : 0
+      },
+      "API::Plesk::Mock" : {
+         "file" : "lib/API/Plesk/Mock.pm",
          "version" : 0
       },
       "API::Plesk::Response" : {
@@ -91,6 +95,10 @@
          "file" : "lib/API/Plesk/SiteBuilder.pm",
          "version" : 0
       },
+      "API::Plesk::User" : {
+         "file" : "lib/API/Plesk/User.pm",
+         "version" : 0
+      },
       "API::Plesk::WebUser" : {
          "file" : "lib/API/Plesk/WebUser.pm",
          "version" : 0
@@ -100,11 +108,11 @@
          "version" : 0
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "license" : [
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "2.00_3"
+   "version" : "2.00"
 }
