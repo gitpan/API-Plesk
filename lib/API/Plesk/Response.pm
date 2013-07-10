@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Data::Dumper;
+use Try::Tiny;
 
 sub new {
     my ( $class, %attrs) = @_;
@@ -33,10 +34,17 @@ sub new {
         $operation  = '';
     }
     else {
-        for my $result ( @{$response->{packet}->{$operator}->{$operation}->[0]->{result}} ) {
-            push @$results, $result;
-            $is_success = '' if $result->{status} && $result->{status} eq 'error';
-
+        try {
+            for my $result ( @{$response->{packet}->{$operator}->{$operation}->[0]->{result}} ) {
+                push @$results, $result;
+                $is_success = '' if $result->{status} && $result->{status} eq 'error';
+            }
+        } catch {
+            $results = [{
+                errcode => '',
+                errtext => "Internal Plesk error: $_.\nDetails:" .Dumper( $response ),
+                status  => 'error'
+            }];
         }
     }
 
@@ -63,7 +71,7 @@ sub data {
 
 sub results {
     my ( $self ) = @_;
-    return undef unless $self->is_success;
+    return   unless $self->is_success;
     return $self->{results} || [];
 }
 
@@ -104,7 +112,7 @@ sub is_connection_error {
     return
         $self->error_text =~ /connection failed/ ||
         $self->error_text =~ /connection timeout/ ||
-        $self->error_text =~ /500 SSL read timeout/
+        $self->error_text =~ /500\s+/
             ? 1 : 0;
 }
 

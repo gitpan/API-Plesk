@@ -4,7 +4,7 @@
       "Ivan Sokolov <ivsokolov@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.110930001",
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -16,32 +16,32 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Test::LongString" : 0,
-            "Test::More" : 0,
-            "URI" : 0
+            "Test::LongString" : "0",
+            "Test::More" : "0",
+            "URI" : "0"
          }
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build" : "0.40"
          }
       },
       "runtime" : {
          "requires" : {
-            "Carp" : 0,
-            "Data::Dumper" : 0,
-            "HTTP::Request" : 0,
-            "LWP::UserAgent" : 0,
-            "Module::Build" : 0,
-            "XML::Fast" : 0,
-            "version" : 0
+            "Carp" : "0",
+            "Data::Dumper" : "0",
+            "HTTP::Request" : "0",
+            "LWP::UserAgent" : "0",
+            "Module::Build" : "0",
+            "XML::Fast" : "0",
+            "version" : "0"
          }
       }
    },
    "provides" : {
       "API::Plesk" : {
          "file" : "lib/API/Plesk.pm",
-         "version" : "2.01"
+         "version" : "2.02"
       },
       "API::Plesk::Component" : {
          "file" : "lib/API/Plesk/Component.pm",
@@ -114,5 +114,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "2.01"
+   "version" : "2.02"
 }
