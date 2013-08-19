@@ -41,7 +41,7 @@
    "provides" : {
       "API::Plesk" : {
          "file" : "lib/API/Plesk.pm",
-         "version" : "2.02"
+         "version" : "2.03"
       },
       "API::Plesk::Component" : {
          "file" : "lib/API/Plesk/Component.pm",
@@ -114,5 +114,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "2.02"
+   "version" : "2.03"
 }
